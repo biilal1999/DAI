@@ -1,11 +1,10 @@
-# docker-compose.yml
-
+# docker-compose.yml -- archivo de configuración
 version: '3.7'
 
-   services:
-      app:
-         build: .
-         ports:
-            - 5000:5000
-         volume:
-            - ./app: /app
+services:
+  app:
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+     - ./app:/app
