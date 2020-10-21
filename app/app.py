@@ -1,6 +1,7 @@
 # ./app/app.py
 
 from flask import Flask
+from flask import render_template
 from matrices import *
 from criba import *
 from fibonacci import *
@@ -12,6 +13,11 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
    return 'Hello, World!'
+
+
+@app.route('/static')
+def index():
+    return render_template('index.html')
 
 
 @app.route('/ordena')
