@@ -1,0 +1,15 @@
+f = open("numero.txt")
+dato = f.read()
+f.close()
+res = fibonacci(dato)
+
+f = open("resultado.txt")
+f.write(res)
+f.close()
+
+f = open("resultado.txt")
+numero = f.read()
+f.close()
+
+print(numero)
+S
