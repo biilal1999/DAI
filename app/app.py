@@ -5,6 +5,7 @@ from matrices import *
 from criba import *
 from fibonacci import *
 from balanceo import *
+from expresiones import *
 app = Flask(__name__)
 
 
@@ -100,6 +101,80 @@ def balancearCadenas():
     return cadena
 
 
-#@app.route('/expresiones/palabra/<cadena>')
-#def encontrarPalabra(cadena):
-    
+@app.route('/expresiones')
+def expresionesError():
+    cadena = '<h2>Debe especificar qué expresion regular debe comprobar, de la siguiente forma: </h2>'
+    cadena += '<ul>'
+    cadena += '<li><strong>localhost:5000/expresiones/frase/<cad></strong> Cuando es una frase</li>'
+    cadena += '<li><strong>localhost:5000/expresiones/correo/<correo></strong> Cuando es un correo electrónico</li>'
+    cadena += '<li><strong>localhost:5000/expresiones/tarjeta/<tarjeta></strong> Cuando es una tarjeta de crédito</li>'
+    cadena += '</ul>'
+
+    return cadena
+
+
+@app.route('/expresiones/frase')
+def cadenaError():
+    cadena = '<h2>Debe especificar una cadena de texto en la URL</h2>'
+
+    return cadena
+
+@app.route('/expresiones/correo')
+def correoError():
+    cadena = '<h2>Debe especificar un correo electrónico en la URL</h2>'
+
+    return cadena
+
+@app.route('/expresiones/tarjeta')
+def tarjetaError():
+    cadena = '<h2>Debe especificar una tarjeta de crédito en la URL</h2>'
+
+    return cadena
+
+@app.route('/expresiones/frase/<cad>')
+def cadenaComprobacion(cad):
+    resultado = comprobarCadena(cad)
+    frase = ""
+
+    if resultado != None:
+       frase = '<h2>La cadena es correcta</h2>'
+
+    else:
+       frase = '<h2>La cadena es incorrecta</h2>'
+
+    return frase
+
+
+@app.route('/expresiones/correo/<correo>')
+def correoComprobacion(correo):
+    resultado = comprobarCorreo(correo)
+    frase = ""
+
+    if resultado != None:
+       frase = '<h2>El correo electrónico es correcto</h2>'
+
+    else:
+       frase = '<h2>El correo electrónico es incorrecto</h2>'
+
+    return frase
+
+
+@app.route('/expresiones/tarjeta/<tarjeta>')
+def tarjetaComprobacion(tarjeta):
+    resultado = comprobarTarjeta(tarjeta)
+    frase = ""
+
+    if resultado != None:
+       frase = '<h2>La tarjeta de crédito es correcta</h2>'
+
+    else:
+       frase = '<h2>La tarjeta de crédito es incorrecta</h2>'
+
+    return frase
+
+
+@app.errorhandler(404)
+def paginaNoEncontrada(error):
+    cadena = '<h1> PÁGINA NO ENCONTRADA. POR FAVOR, REVISE SU DIRECCIÓN URL</h1>'
+
+    return cadena
