@@ -1,12 +1,12 @@
 # ./app/app.py
 
-from flask import Flask
-from flask import render_template
+from flask import Flask, url_for, redirect
 from matrices import *
 from criba import *
 from fibonacci import *
 from balanceo import *
 from expresiones import *
+from svg import *
 app = Flask(__name__)
 
 
@@ -17,14 +17,14 @@ def hello_world():
 
 @app.route('/static')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('static', filename='index.html'))
 
 
 @app.route('/ordena')
 def errorOrdena():
-   cadena = '<h2>Debe introducir los números de la lista en la URL para poder acceder</h2>'
+    cadena = '<h2>Debe introducir los números de la lista en la URL para poder acceder</h2>'
 
-   return cadena
+    return cadena
 
 @app.route('/ordena/<lista>')                                                                   
 def ordena(lista):
@@ -177,6 +177,16 @@ def tarjetaComprobacion(tarjeta):
        frase = '<h2>La tarjeta de crédito es incorrecta</h2>'
 
     return frase
+
+
+@app.route('/svg')
+def opcional():
+    formas = ['circle', 'ellipse', 'line']
+    colores = ['darkmagenta', 'dodgerblue', 'lightcoral', 'olivedrab', 'gold', 'darkcyan', 'oldlace']
+
+    cadena = pintarSVG(formas, colores)
+
+    return cadena
 
 
 @app.errorhandler(404)
