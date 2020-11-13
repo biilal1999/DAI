@@ -14,7 +14,12 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-   return render_template('index.html', title="Pagína principal")
+   return render_template('index.html')
+
+
+@app.route('/ejercicio1')
+def ejercicio1():
+   return render_template('ejercicio1.html')
 
 
 @app.route('/ordena')
@@ -24,7 +29,7 @@ def errorOrdena():
     return cadena
 
 
-@app.route('/ordena/<lista>')                                                                   
+@app.route('/ordena/<lista>')
 def ordena(lista):
    primeraLista = lista.split(',')
    cadena = '<h2> Ordenación en burbuja: '
@@ -64,7 +69,7 @@ def cribaEras(n):
    lista = list(range(2, numero+1))
    criba(lista, numero)
    cad = str(lista)
-   
+
    return '<h3>Primos anteriores: ' + cad + ' </h3>'
 
 
@@ -101,7 +106,7 @@ def balancearCadenas():
 
     cadena = '<h2>La cadena es ' + lista + ' </h2>'
     cadena = cadena + '<h2>El balanceo es ' + palabra + ' </h2>'
-    
+
     return cadena
 
 
