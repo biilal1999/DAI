@@ -1,6 +1,7 @@
 # ./app/app.py
 
-from flask import Flask, url_for, redirect
+from flask import (Flask, url_for, redirect, render_template, session)
+from pickleshare import *
 from matrices import *
 from criba import *
 from fibonacci import *
@@ -11,13 +12,9 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello_world():
-   return 'Hello, World!'
-
-
-@app.route('/static')
+@app.route('/index')
 def index():
-    return redirect(url_for('static', filename='index.html'))
+   return render_template('index.html', title="Pagína principal")
 
 
 @app.route('/ordena')
@@ -25,6 +22,7 @@ def errorOrdena():
     cadena = '<h2>Debe introducir los números de la lista en la URL para poder acceder</h2>'
 
     return cadena
+
 
 @app.route('/ordena/<lista>')                                                                   
 def ordena(lista):
