@@ -1,6 +1,6 @@
 # ./app/app.py
 
-from flask import (Flask, url_for, redirect, render_template, session)
+from flask import (Flask, url_for, redirect, render_template, session, request)
 from pickleshare import *
 from matrices import *
 from criba import *
@@ -56,6 +56,25 @@ def ordena(lista):
    return cadena
 
 
+@app.route('/ordenaEjercicio')
+def ejercicioOrdenaFormulario():
+    return render_template('ejercicio1.html', mensaje="Introduzca números separados por comas", formulario="si", ruta="../ordenaEjercicioResuelto")
+
+
+@app.route('/ordenaEjercicioResuelto', methods=['GET'])
+def ejercicioOrdena():
+    tag=""
+
+    if request.args.get('datos') == "":
+        return render_template('ejercicio1.html',mensaje="Introduzca números separados por comas" ,formulario="si", tag=tag)
+
+    else:
+        cad = ordena(request.args.get('datos'))
+        tag="res"
+
+        return render_template('ejercicio1.html',mensaje="Introduzca números separados por comas", formulario = "si",tag=tag, cadena = cad)
+
+
 @app.route('/criba')
 def cribaError():
    cadena = '<h2>Debe introducir un número en la URL para poder acceder</h2>'
@@ -71,6 +90,25 @@ def cribaEras(n):
    cad = str(lista)
 
    return '<h3>Primos anteriores: ' + cad + ' </h3>'
+
+
+@app.route('/cribaEjercicio')
+def ejercicioCribaFormulario():
+    return render_template('ejercicio1.html', mensaje="Introduzca un número", formulario="si", ruta="../cribaEjercicioResuelto")
+
+
+@app.route('/cribaEjercicioResuelto', methods=['GET'])
+def ejercicioCriba():
+    tag=""
+
+    if request.args.get('datos') == "":
+        return render_template('ejercicio1.html', mensaje="Introduzca un número", formulario="si", tag=tag)
+
+    else:
+        cad = cribaEras(request.args.get('datos'))
+        tag="res"
+
+        return render_template('ejercicio1.html', mensaje="Introduzca un número", formulario="si", tag=tag, cadena=cad)
 
 
 @app.route('/fibonacci')
@@ -93,6 +131,13 @@ def fibonacci():
     return numero
 
 
+@app.route('/fibonacciEjercicio')
+def ejercicioFibonacci():
+    num = fibonacci()
+
+    return render_template('ejercicio1.html', titulo="Fibonacci", nombre="Sucesión de Fibonacci", cadena = num)
+
+
 @app.route('/balanceo')
 def balancearCadenas():
     lista = generadorCadenas()
@@ -108,6 +153,13 @@ def balancearCadenas():
     cadena = cadena + '<h2>El balanceo es ' + palabra + ' </h2>'
 
     return cadena
+
+
+@app.route('/balanceoEjercicio')
+def ejercicioBalanceo():
+    cad = balancearCadenas()
+
+    return render_template('ejercicio1.html', titulo = "Balanceo", nombre="Balanceo de cadenas", cadena = cad)
 
 
 @app.route('/expresiones')
@@ -154,6 +206,25 @@ def cadenaComprobacion(cad):
     return frase
 
 
+@app.route('/fraseEjercicio')
+def ejercicioFraseFormulario():
+    return render_template('ejercicio1.html', mensaje="Introduzca una frase", formulario="si", ruta="../fraseEjercicioResuelto")
+
+
+@app.route('/fraseEjercicioResuelto', methods=['GET'])
+def ejercicioFrase():
+    tag=""
+
+    if request.args.get('datos') == "":
+        return render_template('ejercicio1.html', mensaje="Introduzca una frase", formulario="si", tag=tag)
+
+    else:
+        cad = cadenaComprobacion(request.args.get('datos'))
+        tag="res"
+
+        return render_template('ejercicio1.html', mensaje="Introduzca una frase", formulario="si", tag=tag, cadena=cad)
+
+
 @app.route('/expresiones/correo/<correo>')
 def correoComprobacion(correo):
     resultado = comprobarCorreo(correo)
@@ -166,6 +237,25 @@ def correoComprobacion(correo):
        frase = '<h2>El correo electrónico es incorrecto</h2>'
 
     return frase
+
+
+@app.route('/correoEjercicio')
+def ejercicioCorreoFormulario():
+    return render_template('ejercicio1.html', mensaje="Introduzca un correo electrónico", formulario="si", ruta="../correoEjercicioResuelto")
+
+
+@app.route('/correoEjercicioResuelto', methods=['GET'])
+def ejercicioCorreo():
+    tag=""
+
+    if request.args.get('datos') == "":
+        return render_template('ejercicio1.html', mensaje="Introduzca un correo electrónico", formulario="si", tag=tag)
+
+    else:
+        cad = correoComprobacion(request.args.get('datos'))
+        tag="res"
+
+        return render_template('ejercicio1.html', mensaje="Introduzca un correo electrónico", formulario="si", tag=tag, cadena=cad)
 
 
 @app.route('/expresiones/tarjeta/<tarjeta>')
@@ -182,6 +272,31 @@ def tarjetaComprobacion(tarjeta):
     return frase
 
 
+@app.route('/tarjetaEjercicio')
+def ejercicioTarjetaFormulario():
+    return render_template('ejercicio1.html', mensaje="Introduzca una tarjeta de crédito", formulario="si", ruta="../tarjetaEjercicioResuelto")
+
+
+@app.route('/tarjetaEjercicioResuelto', methods=['GET'])
+def ejercicioTarjeta():
+    tag=""
+
+    if request.args.get('datos') == "":
+        return render_template('ejercicio1.html', mensaje="Introduzca una tarjeta de crédito", formulario="si", tag=tag)
+
+    else:
+        cad = tarjetaComprobacion(request.args.get('datos'))
+        tag="res"
+
+        return render_template('ejercicio1.html', mensaje="Introduzca una tarjeta de crédito", formulario="si", tag=tag, cadena=cad)
+
+
+
+@app.route('/login')
+def funcionLogin():
+    return render_template('login.html')
+
+
 @app.route('/svg')
 def opcional():
     formas = ['circle', 'ellipse', 'line']
@@ -190,6 +305,13 @@ def opcional():
     cadena = pintarSVG(formas, colores)
 
     return cadena
+
+
+@app.route('/svgEjercicio')
+def ejercicioSVG():
+    cad = opcional()
+
+    return render_template('ejercicio1.html', titulo = "SVG", nombre="FIGURAS SVG", cadena = cad)
 
 
 @app.errorhandler(404)

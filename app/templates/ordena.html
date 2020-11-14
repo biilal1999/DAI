@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Ordena
+{% endblock %}
+
+{% block cuerpo %}
+<main role="main" class="container">
+  <h2>Introduzca números separados por comas</h2>
+  <form action="../ordenaEjercicioMatriz" class="form-inline" method="get">
+   <div class="form-group mx-sm-3">
+       <label class="sr-only"></label>
+       <input type="text" class="form-control" id="caja" name="numeros">
+   </div>
+   <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+
+  {% if tag=="res" %}
+  <h3>{{ cadena | safe }}</h3>
+  {% endif %}
+
+</main>
+{% endblock %}
