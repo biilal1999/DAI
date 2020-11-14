@@ -1,35 +1,47 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-{{ titulo | safe}}
+  {{ titulo | safe}}
 {% endblock %}
 
 
 {% block cuerpo %}
-{% if formulario == 'si' %}
-<main role="main" class="container">
-  <h2>{{ mensaje }}</h2>
-  <form action='{{ ruta }}' class="form-inline" method="get">
-      <div class="form-group mx-sm-3">
-        <label class="sr-only"></label>
-        <input type="text" class="form-control" id="caja" name="datos"/>
-      </div>
-      <button type="submit" class="btn btn-primary">Enviar</button>
-  </form>
+  {% if formulario == 'si' %}
+    <main role="main" class="container">
+      <h2>{{ mensaje }}</h2>
+      <form action='{{ ruta }}' class="form-inline" method="get">
+          <div class="form-group mx-sm-3">
+            <label class="sr-only"></label>
+            <input type="text" class="form-control" id="caja" name="datos"/>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
 
-{% if tag=="res" %}
-  <h3>{{ cadena | safe }}</h3>
-</main>
+    {% if tag=="res" %}
+      <h3>{{ cadena | safe }}</h3>
+    </main>
 
-{% endif %}
+    {% endif %}
 
-{% else %}
+    {% else %}
 
-<main role="main" class="container">
-  <h1 class="mt-5">{{ titulo }}</h1>
-  <h2>{{ cadena | safe}} </h2>
-</main>
+    <main role="main" class="container">
+      <h1 class="mt-5">{{ titulo }}</h1>
+      <h2>{{ cadena | safe}} </h2>
+    </main>
 
-{% endif %}
+  {% endif %}
 
+{% endblock %}
+
+{% block primerlink %}
+  <a href='{{ paginas[2] }}'>{{ paginas[2] }}</a>
+{% endblock %}
+
+{% block segundolink %}
+  <a href='{{ paginas[1] }}'>{{ paginas[1] }}</a>
+{% endblock %}
+
+{% block tercerlink %}
+  <a href='{{ paginas[0] }}'>{{ paginas[0] }}</a>
 {% endblock %}

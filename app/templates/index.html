@@ -5,7 +5,20 @@ Index
 {% endblock %}
 
 {% block cuerpo %}
-<main role="main" class="container">
-  <h1 class="mt-5">Bienvenido a la Práctica 3 de DAI</h1>
-</main>
+  <main role="main" class="container">
+    <h1 class="mt-5">Bienvenido a la Práctica 3 de DAI</h1>
+  </main>
+{% endblock %}
+
+
+{% block primerlink %}
+  <a href='{{ paginas[2] }}'>{{ paginas[2] }}</a>
+{% endblock %}
+
+{% block segundolink %}
+  <a href='{{ paginas[1] }}'>{{ paginas[1] }}</a>
+{% endblock %}
+
+{% block tercerlink %}
+  <a href='{{ paginas[0] }}'>{{ paginas[0] }}</a>
 {% endblock %}
