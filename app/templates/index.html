@@ -6,24 +6,45 @@ Index
 
 {% block cuerpo %}
 {% if 'usuario' not in session %}
-    <h1 class="mt-5">Bienvenido a la Práctica 3 de DAI</h1>
+    <div class="container">
+      <div class="row">
+        <h1 class="mt-5">Bienvenido a la Práctica 3 de DAI</h1>
+      </div>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
           {% for message in messages %}
+          <div class="row" id="abajo">
             <h2 class=flashes>{{ message }}</h2>
+          </div>
           {% endfor %}
       {% endif %}
     {% endwith %}
 {% else %}
-    <h1 class="mt-5">Bienvenido {{ session['usuario'] }}</h1>
+    <div class="container">
+      <div class="row">
+        <h1 class="mt-5">Bienvenido {{ session['usuario'] }}</h1>
+      </div>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
           {% for message in messages %}
+          <div class="row" id="abajo">
             <h2 class=flashes>{{ message }}</h2>
+          </div>
           {% endfor %}
       {% endif %}
     {% endwith %}
 {% endif %}
+
+  <div class="row"
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+          <h1 class="display-4 font-italic" id="texto">Microframeworks, sesiones y Flask</h1>
+          <p class="lead my-3">En este sitio web podrá iniciar sesión, acceder a la resolución de ejercicios y consultar sus últimas páginas visitadas</p>
+          <p class="lead mb-0"><a href="https://swad.ugr.es" class="text-white font-weight-bold">Continue reading...</a></p>
+        </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 

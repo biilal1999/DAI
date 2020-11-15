@@ -21,6 +21,10 @@ body {
 
 }
 
+#texto{
+  color: black
+}
+
 .form-signin {
   width: 100%;
   max-width: 330px;
@@ -75,6 +79,21 @@ img {
   padding-left: 15px;
 }
 
+.dropdown-item:hover {
+  background-color: black;
+  color: white;
+}
+
+.row {
+  padding-top: 20px;
+  color: blue;
+}
+
+
+#abajo {
+  padding-top: 30px;
+}
+
 #navbarCollapse {
   padding-left: 60%;
   justify-content: space-between;
@@ -120,8 +139,16 @@ main > .container {
   padding: 0 15px;
 }
 
+#log {
+  padding-right: 10px !important;
+}
+
 code {
   font-size: 80%;
+}
+
+aside {
+  background-color: green;
 }
 
 .wrapper {
@@ -135,7 +162,7 @@ code {
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
-    background: #7386D5;
+    background: green;
     color: #fff;
     transition: all 0.3s;
     margin-left: 0 !important;
@@ -160,7 +187,7 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: green;
 }
 
 #sidebar ul.components {
