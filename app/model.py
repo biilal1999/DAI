@@ -1,18 +1,18 @@
 from pickleshare import *
 
 def loginBD(nombre, password):
-    db = PickleShareDB('~/datos')
+    db = PickleShareDB('data/datos.dat')
     coincide = False
 
     if nombre in db:
-        if db[nombre]['password'] == password:
+        if db[nombre].get('password') == password:
             coincide = True
 
     return coincide
 
 
 def existeUsuario(nombre):
-    db = PickleShareDB('~/datos')
+    db = PickleShareDB('data/datos.dat')
     existe = False
 
     if nombre in db:
@@ -25,7 +25,7 @@ def registrarse(nombre, password):
     exito = False
 
     if (existeUsuario(nombre) == False):
-        db = PickleShareDB('~/datos')
+        db = PickleShareDB('data/datos.dat')
         db[nombre] = dict()
         db[nombre]['password'] = password
         db[nombre] = db[nombre]
@@ -37,8 +37,8 @@ def registrarse(nombre, password):
 def editarUsuario(nombreActual, nombreNuevo, password):
     editado = False
 
-    if (existeUsuario(nombreNuevo) == False):
-        db = PickleShareDB('~/datos')
+    if existeUsuario(nombreNuevo) == False:
+        db = PickleShareDB('data/datos.dat')
         db[nombreNuevo] = dict()
         db[nombreNuevo]['password'] = password
         db[nombreNuevo] = db[nombreNuevo]

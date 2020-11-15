@@ -12,7 +12,7 @@ from model import *
 app = Flask(__name__)
 
 
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = 'mi clave'
 
 paginas = []
 
@@ -21,12 +21,11 @@ paginas = []
 # return request.path
 
 def actualizarPaginas():
-    if 'paginas' in session:
-        ruta = str(request.path)
-        paginas.append(ruta)
+    ruta = str(request.path)
+    paginas.append(ruta)
 
-        if len(paginas) > 3:
-            paginas.pop(0)
+    if len(paginas) > 3:
+        paginas.pop(0)
 
 
 @app.route('/')
@@ -319,10 +318,55 @@ def ejercicioTarjeta():
 
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def funcionLogin():
-    return render_template('login.html')
+    actualizarPaginas()
+    tag = ""
 
+    if request.method == 'POST':
+        username = request.form['usuario']
+        password = request.form['pass']
+
+        if loginBD(username, password) == True:
+            session['usuario'] = username
+            session['password'] = password
+            return redirect(url_for('index'))
+
+        else:
+            tag="Usuario o contraseña incorrectos"
+            return render_template('login.html', tag=tag, paginas=paginas)
+    else:
+        return render_template('login.html', tag=tag, paginas=paginas)
+
+
+@app.route('/logout')
+def funcionLogout():
+    session.pop('usuario', None)
+    session.pop('password', None)
+
+    return redirect(url_for('index'))
+
+
+@app.route('/registro', methods=['GET', 'POST'])
+def funcionRegistro():
+    actualizarPaginas()
+    tag = ""
+
+    if request.method == 'POST':
+        username = request.form['usuario']
+        password = request.form['pass']
+
+        if registrarse(username, password) == True:
+            session['usuario'] = username
+            session['password'] = password
+            return redirect(url_for('index'))
+
+        else:
+            tag="El nombre de usuario no está disponible"
+            return render_template('login.html', tag=tag, paginas=paginas)
+
+    else:
+        return render_template('registro.html', tag=tag, paginas=paginas)
 
 @app.route('/svg')
 def opcional():
