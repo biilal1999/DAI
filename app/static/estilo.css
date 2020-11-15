@@ -168,7 +168,23 @@ aside {
     margin-left: 0 !important;
     padding-left: 0 !important;
     padding-top: 5rem;
+}
 
+
+#enunciado {
+  font-size: 30px;
+  padding-top: 20px;
+  color: black;
+}
+
+#resultado {
+  font-size: 40px;
+  padding-top: 20px;
+  color: black;
+}
+
+.res {
+  padding-top: 15px;
 }
 
 p {

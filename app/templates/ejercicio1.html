@@ -6,7 +6,9 @@
 
 
 {% block cuerpo %}
+  <div class="container">
   {% if formulario == 'si' %}
+    <div class="row">
       <h2>{{ mensaje }}</h2>
       <form action='{{ ruta }}' class="form-inline" method="get">
           <div class="form-group mx-sm-3">
@@ -20,13 +22,19 @@
       <h3>{{ cadena | safe }}</h3>
 
     {% endif %}
+    </div>
 
-    {% else %}
-      <h1 class="mt-5">{{ titulo }}</h1>
-      <h2>{{ cadena | safe}} </h2>
+  {% else %}
+  <div class="row" id="enunciado">
+    <h1 class="mt-5">{{ titulo }}</h1>
+  </div>
+
+  <div class="row" id="resultado">
+    <h2 class="res">{{ cadena | safe}} </h2>
+  </div>
 
   {% endif %}
-
+  </div>
 {% endblock %}
 
 {% block primerlink %}

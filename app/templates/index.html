@@ -5,8 +5,8 @@ Index
 {% endblock %}
 
 {% block cuerpo %}
+  <div class="container">
 {% if 'usuario' not in session %}
-    <div class="container">
       <div class="row">
         <h1 class="mt-5">Bienvenido a la Práctica 3 de DAI</h1>
       </div>
@@ -20,7 +20,7 @@ Index
       {% endif %}
     {% endwith %}
 {% else %}
-    <div class="container">
+
       <div class="row">
         <h1 class="mt-5">Bienvenido {{ session['usuario'] }}</h1>
       </div>
@@ -40,7 +40,7 @@ Index
         <div class="col-md-6 px-0">
           <h1 class="display-4 font-italic" id="texto">Microframeworks, sesiones y Flask</h1>
           <p class="lead my-3">En este sitio web podrá iniciar sesión, acceder a la resolución de ejercicios y consultar sus últimas páginas visitadas</p>
-          <p class="lead mb-0"><a href="https://swad.ugr.es" class="text-white font-weight-bold">Continue reading...</a></p>
+          <p class="lead mb-0"><a href="https://swad.ugr.es" class="text-red font-weight-bold">Continue reading...</a></p>
         </div>
     </div>
   </div>
