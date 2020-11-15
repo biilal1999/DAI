@@ -363,7 +363,7 @@ def funcionRegistro():
 
         else:
             tag="El nombre de usuario no está disponible"
-            return render_template('login.html', tag=tag, paginas=paginas)
+            return render_template('registro.html', tag=tag, paginas=paginas)
 
     else:
         return render_template('registro.html', tag=tag, paginas=paginas)
