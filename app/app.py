@@ -59,7 +59,7 @@ def ordena(lista):
    t = str(tfinal - tinicio)
    cadena = cadena + t + ' segundos</h2>'
 
-   cadena = cadena + '<h3>Cadena ordenada: ' + str(primeraLista) + '</h3>'
+   cadena = cadena + '<h2>Cadena ordenada: ' + str(primeraLista) + '</h2>'
 
    segundaLista = lista.split(',')
    cadena = cadena + '<h2> Ordenación con selección: '
@@ -70,7 +70,7 @@ def ordena(lista):
    t = str(tfinal - tinicio)
    cadena = cadena + t + ' segundos</h2>'
 
-   cadena = cadena + '<h3>Cadena ordenada: ' + str(segundaLista) + '</h3>'
+   cadena = cadena + '<h2>Cadena ordenada: ' + str(segundaLista) + '</h2>'
 
    return cadena
 
@@ -109,7 +109,7 @@ def cribaEras(n):
    criba(lista, numero)
    cad = str(lista)
 
-   return '<h3>Primos anteriores: ' + cad + ' </h3>'
+   return '<h2>Primos anteriores: ' + cad + ' </h2>'
 
 
 @app.route('/cribaEjercicio')

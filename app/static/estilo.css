@@ -79,14 +79,24 @@ img {
   padding-left: 15px;
 }
 
+.container h2{
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.container h2{
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
 .dropdown-item:hover {
-  background-color: black;
-  color: white;
+  background-color: #ffc107;
+  color: black;
 }
 
 .row {
   padding-top: 20px;
-  color: blue;
+  color: #499EC2;
 }
 
 
@@ -148,7 +158,7 @@ code {
 }
 
 aside {
-  background-color: green;
+  background-color: #499EC2;
 }
 
 .wrapper {
@@ -162,7 +172,7 @@ aside {
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
-    background: green;
+    background: #499EC2;
     color: #fff;
     transition: all 0.3s;
     margin-left: 0 !important;
@@ -185,6 +195,12 @@ aside {
 
 .res {
   padding-top: 15px;
+  color: black !important;
+}
+
+
+#tit{
+  color: black !important;
 }
 
 p {
@@ -203,7 +219,7 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: green;
+    background: #499EC2;
 }
 
 #sidebar ul.components {
@@ -231,3 +247,9 @@ ul ul a {
     padding-left: 30px !important;
     background: #6d7fcc;
 }
+
+
+@media screen and (max-width:800px) {
+  aside {
+    display: none;
+  }
