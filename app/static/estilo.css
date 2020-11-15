@@ -7,6 +7,14 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  font-family: 'Poppins', sans-serif;
+  background: #fafafa;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 
@@ -37,9 +45,19 @@ body > .container {
   align-items: center;
 }
 
+main > .container {
+  align-items: center;
+}
+
 .footer > .container {
   padding-right: 15px;
   padding-left: 15px;
+}
+
+.container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
 }
 
 code {
@@ -47,8 +65,10 @@ code {
 }
 
 .wrapper {
-    display: flex;
-    align-items: stretch;
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
 }
 
 #sidebar {
@@ -58,16 +78,10 @@ code {
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
-}
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    padding-top: 5rem;
 
-#sidebar.active {
-    margin-left: -250px;
-}
-
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #fafafa;
 }
 
 p {

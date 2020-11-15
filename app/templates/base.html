@@ -50,30 +50,36 @@
       </nav>
     </header>
 
+
+    <aside>
+      <div class="wrapper">
+      <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Últimas páginas visitadas</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <p>In that order</p>
+                <li class="active">
+                    {% block primerlink %}{% endblock %}
+                </li>
+                <li class="active">
+                    {% block segundolink %}{% endblock %}
+                </li>
+                <li class="active">
+                    {% block tercerlink %}{% endblock %}
+                </li>
+            </ul>
+        </nav>
+      </div>
+    </aside>
+    
+    <main role="main" class="container">
     {% block cuerpo %}{% endblock %}
+    </main>
 
-    <div class="wrapper">
-    <!-- Sidebar -->
-      <nav id="sidebar">
-          <div class="sidebar-header">
-              <h3>Últimas páginas visitadas</h3>
-          </div>
 
-          <ul class="list-unstyled components">
-              <p>In that order</p>
-              <li class="active">
-                  {% block primerlink %}{% endblock %}
-              </li>
-              <li class="active">
-                  {% block segundolink %}{% endblock %}
-              </li>
-              <li class="active">
-                  {% block tercerlink %}{% endblock %}
-              </li>
-          </ul>
-      </nav>
-
-    </div>
 
     <footer class="footer">
       <div class="container">
