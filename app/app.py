@@ -8,11 +8,11 @@ from fibonacci import *
 from balanceo import *
 from expresiones import *
 from svg import *
-from data/model import *
+from model import *
 app = Flask(__name__)
 
 
-app.secret_key = 'mi clave'
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 paginas = []
 
