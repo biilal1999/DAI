@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Mi perfil
+{% endblock %}
+
+
+{% block cuerpo %}
+  {% if accion == "ver" %}
+  <form class="form-signin" action="miperfil" method="post">
+    <h1 class="h3 mb-3 font-weight-normal">Mi perfil</h1>
+    <label for="inputEmail" class="sr-only">Usuario</label>
+    <input type="text" id="inputEmail" class="form-control" name="usuario" value='{{ session['usuario'] }}' disabled required autofocus>
+    <label for="inputPassword" class="sr-only">Contraseña</label>
+    <input type="password" id="inputPassword" class="form-control" name="pass" value='{{ session['password'] }}' disabled required>
+  </form>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+          <h2 class=flashes>{{ message }}</h2>
+        {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% elif accion == "editar" %}
+  <form class="form-signin" action="../editarperfil" method="post">
+    <h1 class="h3 mb-3 font-weight-normal">Editar perfil</h1>
+    <label for="inputEmail" class="sr-only">Usuario</label>
+    <input type="text" id="inputEmail" class="form-control" name="usuario" value='{{ session['usuario'] }}' required autofocus>
+    <label for="inputPassword" class="sr-only">Contraseña</label>
+    <input type="password" id="inputPassword" class="form-control" name="pass" value='{{ session['password'] }}' required>
+    <div class="checkbox mb-3">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Modificar</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
+  </form>
+
+  <h2 class="error">{{ tag }}</h2>
+  {% endif %}
+{% endblock %}
+
+
+{% block primerlink %}
+  <a href='{{ paginas[2] }}'>{{ paginas[2] }}</a>
+{% endblock %}
+
+{% block segundolink %}
+  <a href='{{ paginas[1] }}'>{{ paginas[1] }}</a>
+{% endblock %}
+
+{% block tercerlink %}
+  <a href='{{ paginas[0] }}'>{{ paginas[0] }}</a>
+{% endblock %}

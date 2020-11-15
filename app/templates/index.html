@@ -7,9 +7,22 @@ Index
 {% block cuerpo %}
 {% if 'usuario' not in session %}
     <h1 class="mt-5">Bienvenido a la Práctica 3 de DAI</h1>
-    <h2>Inicie sesión si así lo desea</h2>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+            <h2 class=flashes>{{ message }}</h2>
+          {% endfor %}
+      {% endif %}
+    {% endwith %}
 {% else %}
     <h1 class="mt-5">Bienvenido {{ session['usuario'] }}</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+            <h2 class=flashes>{{ message }}</h2>
+          {% endfor %}
+      {% endif %}
+    {% endwith %}
 {% endif %}
 {% endblock %}
 

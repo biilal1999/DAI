@@ -1,6 +1,6 @@
 # ./app/app.py
 
-from flask import (Flask, url_for, redirect, render_template, session, request)
+from flask import (Flask, url_for, redirect, render_template, session, request, flash)
 from pickleshare import *
 from matrices import *
 from criba import *
@@ -12,7 +12,7 @@ from model import *
 app = Flask(__name__)
 
 
-app.secret_key = 'mi clave'
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 paginas = []
 
@@ -330,6 +330,7 @@ def funcionLogin():
         if loginBD(username, password) == True:
             session['usuario'] = username
             session['password'] = password
+            flash('Inicio de sesión correcto! Bienvenido a nuestra web')
             return redirect(url_for('index'))
 
         else:
@@ -341,6 +342,7 @@ def funcionLogin():
 
 @app.route('/logout')
 def funcionLogout():
+    flash('Ha cerrado su sesión. Nos vemos!')
     session.pop('usuario', None)
     session.pop('password', None)
 
@@ -359,6 +361,7 @@ def funcionRegistro():
         if registrarse(username, password) == True:
             session['usuario'] = username
             session['password'] = password
+            flash('Se ha registrado correctamente! Bienvenido a nuestra web')
             return redirect(url_for('index'))
 
         else:
@@ -367,6 +370,49 @@ def funcionRegistro():
 
     else:
         return render_template('registro.html', tag=tag, paginas=paginas)
+
+
+@app.route('/miperfil')
+def miPerfil():
+    accion="ver"
+
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+
+    else:
+        actualizarPaginas()
+
+        return render_template('user.html', paginas=paginas, accion=accion)
+
+
+@app.route('/editarperfil', methods=['GET', 'POST'])
+def editarPerfil():
+    tag = ""
+    accion="editar"
+
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+
+    else:
+        actualizarPaginas()
+
+        if request.method == 'POST':
+            username = request.form['usuario']
+            password = request.form['pass']
+
+            if editarUsuario(session['usuario'], username, password) == True:
+                flash('Se han editado sus datos correctamente')
+                session['usuario'] = username
+                session['password'] = password
+                return redirect(url_for('miPerfil'))
+
+            else:
+                tag="El nombre de usuario ya está siendo utilizado"
+                return render_template('user.html', tag=tag, paginas=paginas, accion=accion)
+
+        else:
+            return render_template('user.html', paginas=paginas, accion=accion)
+
 
 @app.route('/svg')
 def opcional():

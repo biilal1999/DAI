@@ -66,6 +66,24 @@ img {
   color: #F2043A;
 }
 
+#todo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown {
+  padding-left: 15px;
+}
+
+#navbarCollapse {
+  padding-left: 60%;
+  justify-content: space-between;
+}
+
+#elem {
+  padding: 5%;
+}
+
 
 .footer {
   position: absolute;
