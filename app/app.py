@@ -9,10 +9,15 @@ from balanceo import *
 from expresiones import *
 from svg import *
 from model import *
+from pymongo import MongoClient
 app = Flask(__name__)
 
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+
+client = MongoClient("mongo", 27017)
+db = client.SampleCollections
 
 paginas = []
 
@@ -33,6 +38,19 @@ def actualizarPaginas():
 def index():
    actualizarPaginas()
    return render_template('index.html', paginas=paginas)
+
+
+@app.route('/mongo')
+def mongo():
+    actualizarPaginas()
+    films = db.Sakila_films.find()
+
+    lista_peliculas = []
+
+    for pelis in films:
+        lista_peliculas.append(pelis)
+
+    return render_template('lista.html', lista=lista_peliculas, paginas=paginas)
 
 
 @app.route('/ejercicio1')

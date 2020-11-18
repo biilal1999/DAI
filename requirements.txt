@@ -2,3 +2,4 @@
 
 flask==1.1
 pickleshare
+pymongo

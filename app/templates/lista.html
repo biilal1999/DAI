@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Peliculas
+{% endblock %}
+
+
+{% block cuerpo %}
+  <div class="container">
+    <div class="row">
+      <h1>Lista de películas</h1>
+            <ul class="list-group">
+              {% for i in lista: %}
+                <li class="list-group-item">{{ i.Title | safe }}</li>
+              {% endfor %}
+            </ul>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+{% block primerlink %}
+  <a href='{{ paginas[2] }}'>{{ paginas[2] }}</a>
+{% endblock %}
+
+{% block segundolink %}
+  <a href='{{ paginas[1] }}'>{{ paginas[1] }}</a>
+{% endblock %}
+
+{% block tercerlink %}
+  <a href='{{ paginas[0] }}'>{{ paginas[0] }}</a>
+{% endblock %}
