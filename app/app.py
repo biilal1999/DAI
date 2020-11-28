@@ -50,11 +50,48 @@ def mongo():
         return render_template('lista.html', paginas=paginas, tag=tag)
 
     else:
+
+        if 'pok' in request.form:
+            nuevoNombre = request.form['pok']
+            todos = db[base].find()
+            id = -1.0
+
+            for p in todos:
+                id = p['id']
+
+            id = id + 1.0
+            myquery = { "name": nuevoNombre, "id": id }
+            db[base].insert_one(myquery)
+            flash("Pokemon añadido con éxito")
+
+            return render_template('lista.html', paginas=paginas, tag=tag)
+
+        if 'idenobj' in request.form:
+            idenobj = request.form['idenobj']
+            idenobj = float(idenobj)
+            nombre = request.form['nombre']
+            antiguo = { "id": idenobj }
+            nuevo = { "$set": { "name": nombre } }
+            db[base].update_one(antiguo, nuevo)
+            flash("Pokemon actualizado con éxito")
+
+            return render_template('lista.html', paginas=paginas, tag=tag)
+
         tag = "res"
-        nombre = request.form['nombre']
-        id = request.form['id']
-        id = int(id)
-        id = id * 1.0
+
+        if 'nombre' in request.form:
+            nombre = request.form['nombre']
+
+        if 'id' in request.form:
+            id = request.form['id']
+
+            if id != '':
+                id = int(id)
+                id = id * 1.0
+
+        else:
+            id = -1.0
+
         vec = db[base].find()
         lista = []
 
@@ -63,6 +100,30 @@ def mongo():
                 lista.append(obj)
 
         return render_template('lista.html', lista=lista, paginas=paginas, tag=tag)
+
+
+@app.route('/acciones', methods=['GET', 'POST'])
+def baseDatos():
+    tag = ""
+
+    if request.method == 'POST':
+        accion = request.form['accion']
+        iden = request.form['identificador']
+        iden = float(iden)
+
+        if accion == "borrar":
+            myquery = {'id': iden}
+            flash("Pokémon borrado correctamente")
+            db[base].delete_one(myquery)
+
+        if accion == "editar":
+            tag="mod"
+            myquery = {'id': iden}
+            obj = db[base].find_one(myquery)
+            valor = obj['name']
+            return render_template('lista.html', paginas=paginas, tag=tag, valor=valor, iden=iden)
+
+    return render_template('lista.html', paginas=paginas)
 
 
 @app.route('/ejercicio1')

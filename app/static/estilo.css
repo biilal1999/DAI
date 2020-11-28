@@ -175,6 +175,11 @@ aside {
   background-color: #499EC2;
 }
 
+
+#cr{
+  margin-left: 100px;
+}
+
 .wrapper {
     position: fixed
     top: 0

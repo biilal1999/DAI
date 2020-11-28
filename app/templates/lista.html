@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-Peliculas
+Pokémons
 {% endblock %}
 
 
@@ -9,26 +9,58 @@ Peliculas
   <div class="container">
     <h1>Mongo</h1>
 
-    <div class="row">
-      <h2>Haga su consulta sobre Pokémons</h2>
-      <form action='../mongo' class="form-signin" method="post">
-        <div class="row">
-            <div class="form-group mx-sm-3">
-              <label class="sr-only">Consulte por nombre del Pokemon</label>
-              <input type="text" class="form-control" id="caja" name="nombre" placeholder="Nombre del Pokémon por subcadena"/>
-            </div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+          <div class="row" id="abajo">
+            <h2 class=flashes>{{ message }}</h2>
           </div>
+          {% endfor %}
+      {% endif %}
+    {% endwith %}
 
+    {% if tag != "mod" %}
+    <div class="row">
+      <div class="col-sm">
+        <h2>Haga su consulta sobre Pokémons</h2>
+        <form action='../mongo' class="form-signin" method="post">
           <div class="row">
               <div class="form-group mx-sm-3">
+                <p>Consulte por nombre del Pokemon</p>
                 <label class="sr-only">Consulte por nombre del Pokemon</label>
-                <input type="number" class="form-control" id="caja" name="id" placeholder="id del pokemon"/>
+                <input type="text" class="form-control" id="caja" name="nombre"/>
+              </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mx-sm-3">
+                  <p>Consulte por identificador del Pokemon</p>
+                  <label class="sr-only">Consulte por id del Pokemon</label>
+                  <input type="number" class="form-control" id="caja" name="id"/>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
+
+
+      <div class="col-sm" id="cr">
+        <h2>Inserte un nuevo Pokemon</h2>
+        <form action='../mongo' class="form-signin" method="post">
+          <div class="row">
+              <div class="form-group mx-sm-3">
+                <p>Consulte por nombre del Pokemon</p>
+                <label class="sr-only">Cree un nuevo Pokemon</label>
+                <input type="text" class="form-control" id="caja" name="pok" />
               </div>
           </div>
-
-          <button type="submit" class="btn btn-primary">Enviar</button>
-      </form>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
     </div>
+
+    {% endif %}
 
     {% if tag == "res" %}
 
@@ -40,16 +72,29 @@ Peliculas
                     <li class="list-group-item">{{ p.name }}</li>
                     <li class="list-group-item">{{ p.id }}</li>
 
-                    <form method="post">
-                      <button type="submit" class="btn btn-primary" name="accion" value="modificar">Modificar</button>
-                      <button type="submit" class="btn btn-primary" name="accion" value="borrar">Borrar</button>
-                      <input type="hidden" name="identificador" value='{{ p.id }}'</input>
+                    <form action='../acciones' method="post">
+                      <button type="submit" class="btn btn-warning" name="accion" value="editar">Editar</button>
+                      <button type="submit" class="btn btn-danger" name="accion" value="borrar">Borrar</button>
+                      <input type="hidden" name="identificador" value='{{ p.id }}' </input>
                     </form>
 
                   </ul>
                 </li>
               {% endfor %}
         </ul>
+    </div>
+
+
+    {% elif tag == "mod" %}
+
+    <div class="row">
+      <form action='../mongo' class="form-signin" method="post">
+        <p>Modifique el nombre del Pokemon</p>
+        <label class="sr-only">Consulte por nombre del Pokemon</label>
+        <input type="text" class="form-control" id="caja" name="nombre" value='{{ valor }}' />
+        <input type="hidden" name="idenobj" value='{{ iden }}' />
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
     </div>
 
     {% endif %}
