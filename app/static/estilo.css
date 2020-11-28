@@ -152,9 +152,15 @@ main > .container {
 }
 
 
-.list-group-item:hover {
+/*.list-group-item:hover {
   background-color: black;
   color: white;
+}*/
+
+
+#lista{
+  margin-left: 180px;
+  margin-top: 40px;
 }
 
 #log {

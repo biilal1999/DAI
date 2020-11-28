@@ -20,6 +20,7 @@ client = MongoClient("mongo", 27017)
 db = client.SampleCollections
 
 paginas = []
+base = "samples_pokemon"
 
 #paginas = "hola"
 #if 'paginas' in session:
@@ -40,17 +41,28 @@ def index():
    return render_template('index.html', paginas=paginas)
 
 
-@app.route('/mongo')
+@app.route('/mongo', methods=['GET', 'POST'])
 def mongo():
-    actualizarPaginas()
-    films = db.Sakila_films.find()
+    tag = ""
 
-    lista_peliculas = []
+    if request.method != 'POST':
+        actualizarPaginas()
+        return render_template('lista.html', paginas=paginas, tag=tag)
 
-    for pelis in films:
-        lista_peliculas.append(pelis)
+    else:
+        tag = "res"
+        nombre = request.form['nombre']
+        id = request.form['id']
+        id = int(id)
+        id = id * 1.0
+        vec = db[base].find()
+        lista = []
 
-    return render_template('lista.html', lista=lista_peliculas, paginas=paginas)
+        for obj in vec:
+            if nombre in obj['name'] or obj['id'] == id:
+                lista.append(obj)
+
+        return render_template('lista.html', lista=lista, paginas=paginas, tag=tag)
 
 
 @app.route('/ejercicio1')
