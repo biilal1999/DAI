@@ -1,6 +1,6 @@
 # ./app/app.py
 
-from flask import (Flask, url_for, redirect, render_template, session, request, flash)
+from flask import (Flask, url_for, redirect, render_template, session, request, flash, jsonify)
 from pickleshare import *
 from matrices import *
 from criba import *
@@ -10,6 +10,8 @@ from expresiones import *
 from svg import *
 from model import *
 from pymongo import MongoClient
+from bson import ObjectId
+from random_object_id import generate
 app = Flask(__name__)
 
 
@@ -39,6 +41,46 @@ def actualizarPaginas():
 def index():
    actualizarPaginas()
    return render_template('index.html', paginas=paginas)
+
+
+
+@app.route('/api/pokemons', methods=['GET', 'POST'])
+def api_1():
+    if request.method == 'GET':
+        lista = []
+        pok = db[base].find().sort('name')
+
+        for p in pok:
+            lista.append({
+                'id':   str(p.get('_id')),
+                'name': p.get('name'),
+                'height': p.get('height'),
+                'weight': p.get('weight')
+            })
+
+        return jsonify(lista)
+
+    elif request.method == 'POST':
+        nombre = "Sin nombre"
+        height = "2.0 m"
+        weight = "10.0 kg"
+
+        if 'name' in request.form:
+            nombre = request.form['name']
+
+        if 'height' in request.form:
+            height = request.form['height']
+
+        if 'weight' in request.form:
+            weight = request.form['weight']
+
+        id = generate()
+
+        myquery = { "_id": id, "name": nombre, "height": height, "weight": weight }
+        db[base].insert_one(myquery)
+
+        return jsonify(myquery)
+
 
 
 @app.route('/mongo', methods=['GET', 'POST'])
