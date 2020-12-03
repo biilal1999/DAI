@@ -1,6 +1,7 @@
 # ./app/app.py
 
 from flask import (Flask, url_for, redirect, render_template, session, request, flash, jsonify)
+from flask_restful import Resource, Api
 from pickleshare import *
 from matrices import *
 from criba import *
@@ -34,6 +35,18 @@ def actualizarPaginas():
 
     if len(paginas) > 3:
         paginas.pop(0)
+
+
+def obtenerSiguiente():
+    todos = db[base].find()
+    id = -1.0
+
+    for p in todos:
+        id = p['id']
+
+    id = id + 1.0
+
+    return id
 
 
 @app.route('/')
@@ -75,11 +88,85 @@ def api_1():
             weight = request.form['weight']
 
         id = generate()
+        iden = obtenerSiguiente()
 
-        myquery = { "_id": id, "name": nombre, "height": height, "weight": weight }
+        myquery = { "_id": ObjectId(id), "id": iden, "name": nombre, "height": height, "weight": weight }
         db[base].insert_one(myquery)
 
-        return jsonify(myquery)
+        return jsonify({
+            "_id":      id,
+            "name":     nombre,
+            "height":   height,
+            "weight":   weight
+        })
+
+
+@app.route('/api/pokemons/<id>', methods=['GET', 'PUT', 'DELETE'])
+def api_2(id):
+    if request.method == 'GET':
+        try:
+            pok = db[base].find_one({'_id': ObjectId(id)})
+
+            return jsonify({
+                'id':       id,
+                'name':     pok.get('name'),
+                'height':   pok.get('height'),
+                'weight':   pok.get('weight')
+            })
+
+        except:
+            return jsonify({'error': 'Not Found'}), 404
+
+
+    elif request.method == 'PUT':
+        try:
+            pok = db[base].find_one({'_id': ObjectId(id)})
+
+            nombre = pok.get('name')
+            height = pok.get('height')
+            weight = pok.get('weight')
+
+            if 'name' in request.form:
+                nombre = request.form['name']
+
+            if 'height' in request.form:
+                height = request.form['height']
+
+            if 'weight' in request.form:
+                weight = request.form['weight']
+
+
+            antiguo = { "_id": ObjectId(id) }
+            nuevo = { "$set": { "name": nombre , "height": height, "weight": weight } }
+
+            db[base].update_one(antiguo, nuevo)
+
+            pok = db[base].find_one({'_id': ObjectId(id)})
+
+            return jsonify({
+                'id':       id,
+                'name':     pok.get('name'),
+                'height':   pok.get('height'),
+                'weight':   pok.get('weight')
+            })
+
+        except:
+            return jsonify({'error': 'Not Found'}), 404
+
+
+    elif request.method == 'DELETE':
+        try:
+            pok = db[base].find_one({'_id': ObjectId(id)})
+            myquery = { "_id": ObjectId(id) }
+
+            db[base].delete_one(myquery)
+
+            return jsonify({
+                'id':   id
+            })
+
+        except:
+            return jsonify({'error': 'Not Found'}), 404
 
 
 
