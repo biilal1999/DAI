@@ -1,7 +1,7 @@
 # ./app/app.py
 
 from flask import (Flask, url_for, redirect, render_template, session, request, flash, jsonify)
-from flask_restful import Resource, Api
+#from flask_restful import Resource, Api
 from pickleshare import *
 from matrices import *
 from criba import *
@@ -14,6 +14,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from random_object_id import generate
 app = Flask(__name__)
+#api = Api(app)
 
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -60,18 +61,53 @@ def index():
 @app.route('/api/pokemons', methods=['GET', 'POST'])
 def api_1():
     if request.method == 'GET':
-        lista = []
-        pok = db[base].find().sort('name')
+        if len(request.args) != 0:
+            myquery = {}
 
-        for p in pok:
-            lista.append({
-                'id':   str(p.get('_id')),
-                'name': p.get('name'),
-                'height': p.get('height'),
-                'weight': p.get('weight')
-            })
+            if request.args.get('name') != None:
+                nombre = request.args.get('name')
+                myquery['name'] = nombre
 
-        return jsonify(lista)
+            if request.args.get('height') != None:
+                height = request.args.get('height')
+                myquery['height'] = height
+
+            if request.args.get('weight') != None:
+                weight = request.args.get('weight')
+                myquery['weight'] = weight
+
+            try:
+                lista = []
+                pok = db[base].find(myquery)
+
+                for p in pok:
+                    lista.append({
+                        'id':   str(p.get('_id')),
+                        'name': p.get('name'),
+                        'height': p.get('height'),
+                        'weight': p.get('weight')
+                    })
+
+                return jsonify(lista)
+
+            except:
+                return jsonify({'error': 'Not Found'}), 404
+
+        else:
+
+            lista = []
+            pok = db[base].find().sort('name')
+
+            for p in pok:
+                lista.append({
+                    'id':   str(p.get('_id')),
+                    'name': p.get('name'),
+                    'height': p.get('height'),
+                    'weight': p.get('weight')
+                })
+
+            return jsonify(lista)
+
 
     elif request.method == 'POST':
         nombre = "Sin nombre"
