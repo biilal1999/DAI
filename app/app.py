@@ -1,7 +1,7 @@
 # ./app/app.py
 
 from flask import (Flask, url_for, redirect, render_template, session, request, flash, jsonify)
-#from flask_restful import Resource, Api
+from flask_restful import (Resource, Api, reqparse)
 from pickleshare import *
 from matrices import *
 from criba import *
@@ -14,7 +14,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from random_object_id import generate
 app = Flask(__name__)
-#api = Api(app)
+api = Api(app)
 
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -26,9 +26,132 @@ db = client.SampleCollections
 paginas = []
 base = "samples_pokemon"
 
+parser = reqparse.RequestParser()
+parser.add_argument('name', type=str)
+parser.add_argument('height', type=str)
+parser.add_argument('weight', type=str)
+
 #paginas = "hola"
 #if 'paginas' in session:
 # return request.path
+
+
+class apiPrimera(Resource):
+    def get(self):
+        lista = []
+        pok = db[base].find()
+
+        for p in pok:
+            lista.append({
+                'id':   str(p.get('_id')),
+                'name': p.get('name'),
+                'height': p.get('height'),
+                'weight': p.get('weight')
+            })
+
+        return jsonify(lista)
+
+    def post(self):
+        nombre = "Sin nombre"
+        height = "2.0 m"
+        weight = "10.0 kg"
+
+        if 'name' in request.form:
+            nombre = request.form['name']
+
+        if 'height' in request.form:
+            height = request.form['height']
+
+        if 'weight' in request.form:
+            weight = request.form['weight']
+
+        id = generate()
+        iden = obtenerSiguiente()
+
+        myquery = { "_id": ObjectId(id), "id": iden, "name": nombre, "height": height, "weight": weight }
+        db[base].insert_one(myquery)
+
+        return jsonify({
+            "_id":      id,
+            "name":     nombre,
+            "height":   height,
+            "weight":   weight
+        })
+
+
+api.add_resource(apiPrimera, "/apiPrimera")
+
+
+
+class apiSegunda(Resource):
+    def get(self, id):
+        try:
+            pok = db[base].find_one({'_id': ObjectId(id)})
+
+            return jsonify({
+                'id':       id,
+                'name':     pok.get('name'),
+                'height':   pok.get('height'),
+                'weight':   pok.get('weight')
+            })
+
+        except:
+            return jsonify({'error': 'Not Found'})
+
+    def put(self, id):
+        try:
+            pok = db[base].find_one({'_id': ObjectId(id)})
+
+            nombre = pok.get('name')
+            height = pok.get('height')
+            weight = pok.get('weight')
+
+            if 'name' in request.form:
+                nombre = request.form['name']
+
+            if 'height' in request.form:
+                height = request.form['height']
+
+            if 'weight' in request.form:
+                weight = request.form['weight']
+
+
+            antiguo = { "_id": ObjectId(id) }
+            nuevo = { "$set": { "name": nombre , "height": height, "weight": weight } }
+
+            db[base].update_one(antiguo, nuevo)
+
+            pok = db[base].find_one({'_id': ObjectId(id)})
+
+            return jsonify({
+                'id':       id,
+                'name':     pok.get('name'),
+                'height':   pok.get('height'),
+                'weight':   pok.get('weight')
+            })
+
+        except:
+            return jsonify({'error': 'Not Found'})
+
+
+    def delete(self, id):
+        try:
+            pok = db[base].find_one({'_id': ObjectId(id)})
+            myquery = { "_id": ObjectId(id) }
+
+            db[base].delete_one(myquery)
+
+            return jsonify({
+                'id':   id
+            })
+
+        except:
+            return jsonify({'error': 'Not Found'})
+
+
+
+api.add_resource(apiSegunda, "/apiSegunda/<string:id>")
+
 
 def actualizarPaginas():
     ruta = str(request.path)
