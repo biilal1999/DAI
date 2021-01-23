@@ -58,6 +58,20 @@ body {
 }
 
 
+#titulillo{
+  color: black;
+}
+
+
+
+.table{
+  padding-top: 10%;
+  margin-top: 10%;
+}
+
+
+
+
 img {
   height: 5%;
   width: 5%;
@@ -107,12 +121,17 @@ img {
 }
 
 #navbarCollapse {
-  padding-left: 60%;
+  padding-left: 40%;
   justify-content: space-between;
 }
 
 #elem {
   padding: 5%;
+}
+
+
+#link{
+  padding-left: 2%;
 }
 
 

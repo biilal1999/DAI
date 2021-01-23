@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Búsqueda
+{% endblock %}
+
+{% block cuerpo %}
+
+<script>
+    // código jQuery que se ejecuta al cargar la página
+    $(document).ready(function(){
+      $("#light_mode").hide();
+  
+      $("#dark_mode").click(function() {
+  
+      $("#light_mode").show();
+      $("#dark_mode").hide();
+      $("body").addClass("bg-dark");
+      $("body").addClass("text-white");
+      $(".list-group-item").addClass("list-group-item-dark");
+      $(".card").addClass("bg-dark");
+  
+      });
+  
+  
+      $("#light_mode").click(function() {
+  
+      $("#dark_mode").show();
+      $("#light_mode").hide();
+      $("body").removeClass("bg-dark");
+      $("body").removeClass("text-white");
+      $(".list-group-item").removeClass("list-group-item-dark");
+      $(".card").removeClass("bg-dark");
+  
+      });
+    // evento para cuando cambia el valor introducido en un <input id="buscar" $gt;
+      $('#buscar').change(function(){
+        let value = $(this).val()
+        console.log(value)
+  
+        $.ajax({
+          url : 'http://0.0.0.0:5000/api/buscapokemon',
+          data : { nombre : value },
+          type : 'GET',
+          datatype: 'json',
+          success : function (data) {
+            let htmlString = '<thead class="thead-dark"><tr><th scope="col">Nombre</th><th scope="col">ID</th><th scope="col">Acción</th></tr></thead><tbody>'
+            $.each(data, function (i, v) {
+              htmlString += `<tr id=${v.id}><td> ${v.name} </td> <td>${v.id}</td> <td><button class="btn btn-danger" onclick="Pulso('${v.id}', '${value}')">Borrar</button></td> </tr>`
+            })
+            htmlString += `</tbody>`
+
+            $('#tabla').html(htmlString)
+          }
+        });
+  
+      });
+    });
+  
+    function Pulso(id, nom) {
+        // Para poner otra vez funciones jQuery en el DOM actual
+        let link = 'http://0.0.0.0:5000/api/borrapokemon/'
+            link += id
+
+        $.ajax({
+            url : link,
+            type : 'DELETE',
+            datatype: 'json',
+            success : function (data) {
+              $.ajax({
+                url : 'http://0.0.0.0:5000/api/buscapokemon',
+                data : { nombre : nom },
+                type : 'GET',
+                datatype: 'json',
+                success : function (data) {
+                  let htmlString = '<thead class="thead-dark"><tr><th scope="col">Nombre</th><th scope="col">ID</th><th scope="col">Acción</th></tr></thead><tbody>'
+                  $.each(data, function (i, v) {
+                    htmlString += `<tr id=${v.id}><td> ${v.name} </td> <td>${v.id}</td> <td><button class="btn btn-danger" onclick="Pulso('${v.id}', '${nom}')">Borrar</button></td> </tr>`
+                  })
+                  htmlString += `</tbody>`
+
+                  $('#tabla').html(htmlString)
+                }
+              })
+            }
+          });
+      }
+  </script>
+  <div class="text-center">
+        <div class="col">
+          <div class="row">
+            <h1 id="titulillo" class="h3 mb-3 font-weight-normal">Busca Pokemons</h1>
+          </div>
+          <div class="row">
+            <input type="text" name="buscar" id="buscar" class="form-control" placeholder="Nombre del Pokemon" required>
+          </div>
+          <div class="row">
+            <input class="btn btn-lg btn-primary btn-block" type="submit"></input>
+          </div>
+        </div>
+    </div>
+  <table class="table" id="tabla"></table>
+
+{% endblock %}

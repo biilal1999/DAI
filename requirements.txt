@@ -5,3 +5,4 @@ pickleshare
 pymongo
 random-object-id
 flask_restful
+flask_cors

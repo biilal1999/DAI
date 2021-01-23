@@ -1,6 +1,7 @@
 # ./app/app.py
 
 from flask import (Flask, url_for, redirect, render_template, session, request, flash, jsonify)
+from flask_cors import CORS
 from flask_restful import (Resource, Api, reqparse)
 from pickleshare import *
 from matrices import *
@@ -15,6 +16,7 @@ from bson import ObjectId
 from random_object_id import generate
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -181,6 +183,12 @@ def index():
 
 
 
+@app.route('/busqueda')
+def busqueda():
+    actualizarPaginas()
+    return render_template('busqueda.html', paginas=paginas)
+
+
 @app.route('/api/pokemons', methods=['GET', 'POST'])
 def api_1():
     if request.method == 'GET':
@@ -327,6 +335,52 @@ def api_2(id):
         except:
             return jsonify({'error': 'Not Found'}), 404
 
+
+@app.route('/api/buscapokemon', methods=['GET'])
+def api_3():
+    if request.method == 'GET':
+        myquery = {}
+
+        myquery['nombre'] = request.args.get('nombre')
+        nombre = request.args.get('nombre')
+        lista = []
+        vec = db[base].find()
+
+        for obj in vec:
+            if nombre in obj['name']:
+                lista.append({
+                    'id':   obj['id'],
+                    'name': obj['name'],
+                    'height': obj['height'],
+                    'weight': obj['weight']
+                })
+
+            
+        if len(lista) > 0:
+            return jsonify(lista)
+
+        else:
+            return jsonify()
+
+
+
+@app.route('/api/borrapokemon/<iden>', methods=['DELETE'])
+def api_4(iden):
+    if request.method == 'DELETE':
+        iden = float(iden)
+
+        myquery = {'id': iden}
+
+        try:
+            db[base].delete_one(myquery)
+
+            return jsonify(myquery)
+
+        except:
+            return jsonify({'error':'Not found'}), 404
+
+
+        
 
 
 @app.route('/mongo', methods=['GET', 'POST'])
