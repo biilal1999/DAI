@@ -5,10 +5,10 @@ Index
 {% endblock %}
 
 {% block cuerpo %}
-  <div class="container">
+  <div class="container" id="cuerpo-texto">
 {% if 'usuario' not in session %}
       <div class="row">
-        <h1 class="mt-5">Bienvenido a la Práctica 3 de DAI</h1>
+        <h1 class="mt-5" id="titulillo">Bienvenido a la Práctica 3 de DAI</h1>
       </div>
     {% with messages = get_flashed_messages() %}
       {% if messages %}

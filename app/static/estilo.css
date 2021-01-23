@@ -116,12 +116,22 @@ img {
 }
 
 
+
+.modo-oscuro{
+  background-color: black !important;
+}
+
+.texto-blanco{
+  color: white !important;
+}
+
+
 #abajo {
   padding-top: 30px;
 }
 
 #navbarCollapse {
-  padding-left: 40%;
+  padding-left: 20%;
   justify-content: space-between;
 }
 

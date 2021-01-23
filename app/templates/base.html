@@ -46,6 +46,7 @@
           </div>
         </div>
         <a id ="link" class="navbar-brand" href="busqueda">Búsqueda</a>
+        <button type="button" class="btn btn-warning" onclick="Modo()">Cambiar Modo</button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             {% if 'usuario' not in session %}
@@ -70,6 +71,33 @@
           </ul>
         </div>
       </nav>
+
+      <script> 
+        function Modo(){
+              var body = document.body;
+              var principal=document.getElementById("contenedor")
+              var pie=document.getElementById("foot")
+              var textopie=document.getElementById("textopie")
+              var textoTabla = document.getElementById("fila")
+              var textoTitulo = document.getElementById("titulillo")
+              var textoMicro = document.getElementById("texto")
+
+              if(textoTabla!=null)
+                textoTabla.classList.toggle("texto-blanco")
+
+              if(textoTitulo!=null)
+                textoTitulo.classList.toggle("texto-blanco")
+
+              if(textoMicro!=null)
+                textoMicro.classList.toggle("texto-blanco")
+
+              textopie.classList.toggle("texto-blanco")
+              body.classList.toggle("modo-oscuro")
+              principal.classList.toggle("modo-oscuro")
+              pie.classList.toggle("modo-oscuro")
+            }
+      </script>
+
     </header>
 
 
@@ -97,15 +125,15 @@
       </div>
     </aside>
 
-    <main role="main" class="container">
+    <main role="main" class="container" id="contenedor">
     {% block cuerpo %}{% endblock %}
     </main>
 
 
 
-    <footer class="footer">
+    <footer class="footer" id="foot">
       <div class="container">
-        <span class="text-muted"><a href="https://github.com/biilal1999/DAI">Repositorio de DAI en GitHub</a></span>
+        <span class="text-muted" id="textopie"><a href="https://github.com/biilal1999/DAI">Repositorio de DAI en GitHub</a></span>
       </div>
     </footer>
 

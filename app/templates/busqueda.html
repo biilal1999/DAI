@@ -9,30 +9,7 @@ Búsqueda
 <script>
     // código jQuery que se ejecuta al cargar la página
     $(document).ready(function(){
-      $("#light_mode").hide();
-  
-      $("#dark_mode").click(function() {
-  
-      $("#light_mode").show();
-      $("#dark_mode").hide();
-      $("body").addClass("bg-dark");
-      $("body").addClass("text-white");
-      $(".list-group-item").addClass("list-group-item-dark");
-      $(".card").addClass("bg-dark");
-  
-      });
-  
-  
-      $("#light_mode").click(function() {
-  
-      $("#dark_mode").show();
-      $("#light_mode").hide();
-      $("body").removeClass("bg-dark");
-      $("body").removeClass("text-white");
-      $(".list-group-item").removeClass("list-group-item-dark");
-      $(".card").removeClass("bg-dark");
-  
-      });
+     
     // evento para cuando cambia el valor introducido en un <input id="buscar" $gt;
       $('#buscar').change(function(){
         let value = $(this).val()
@@ -44,9 +21,9 @@ Búsqueda
           type : 'GET',
           datatype: 'json',
           success : function (data) {
-            let htmlString = '<thead class="thead-dark"><tr><th scope="col">Nombre</th><th scope="col">ID</th><th scope="col">Acción</th></tr></thead><tbody>'
+            let htmlString = '<thead class="thead-dark"><tr><th scope="col">Nombre</th><th scope="col">ID</th><th scope="col">Acción</th></tr></thead><tbody id="fila">'
             $.each(data, function (i, v) {
-              htmlString += `<tr id=${v.id}><td> ${v.name} </td> <td>${v.id}</td> <td><button class="btn btn-danger" onclick="Pulso('${v.id}', '${value}')">Borrar</button></td> </tr>`
+              htmlString += `<tr><td> ${v.name} </td> <td>${v.id}</td> <td><button class="btn btn-danger" onclick="Pulso('${v.id}', '${value}')">Borrar</button></td> </tr>`
             })
             htmlString += `</tbody>`
 
@@ -73,9 +50,9 @@ Búsqueda
                 type : 'GET',
                 datatype: 'json',
                 success : function (data) {
-                  let htmlString = '<thead class="thead-dark"><tr><th scope="col">Nombre</th><th scope="col">ID</th><th scope="col">Acción</th></tr></thead><tbody>'
+                  let htmlString = '<thead class="thead-dark"><tr><th scope="col">Nombre</th><th scope="col">ID</th><th scope="col">Acción</th></tr></thead><tbody id="fila">'
                   $.each(data, function (i, v) {
-                    htmlString += `<tr id=${v.id}><td> ${v.name} </td> <td>${v.id}</td> <td><button class="btn btn-danger" onclick="Pulso('${v.id}', '${nom}')">Borrar</button></td> </tr>`
+                    htmlString += `<tr><td> ${v.name} </td> <td>${v.id}</td> <td><button class="btn btn-danger" onclick="Pulso('${v.id}', '${nom}')">Borrar</button></td> </tr>`
                   })
                   htmlString += `</tbody>`
 
@@ -86,7 +63,7 @@ Búsqueda
           });
       }
   </script>
-  <div class="text-center">
+  <div class="text-center" id="textoCuerpo">
         <div class="col">
           <div class="row">
             <h1 id="titulillo" class="h3 mb-3 font-weight-normal">Busca Pokemons</h1>
